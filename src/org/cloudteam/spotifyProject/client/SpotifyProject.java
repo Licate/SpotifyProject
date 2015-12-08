@@ -1,6 +1,7 @@
 package org.cloudteam.spotifyProject.client;
 
 import org.cloudteam.spotifyProject.shared.FieldVerifier;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -117,24 +118,30 @@ public class SpotifyProject implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer, new AsyncCallback<String>() {
-					public void onFailure(Throwable caught) {
-						// Show the RPC error message to the user
-						dialogBox.setText("Remote Procedure Call - Failure");
-						serverResponseLabel.addStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(SERVER_ERROR);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
+				try {
+					greetingService.greetGetCharts("viral", "global", "daily", "2015-12-04", 10, new AsyncCallback<String>() {
+						public void onFailure(Throwable caught) {
+							// Show the RPC error message to the user
+							dialogBox.setText("Remote Procedure Call - Failure");
+							serverResponseLabel.addStyleName("serverResponseLabelError");
+							serverResponseLabel.setHTML(SERVER_ERROR);
+							dialogBox.center();
+							closeButton.setFocus(true);
+						}
 
-					public void onSuccess(String result) {
-						dialogBox.setText("Remote Procedure Call");
-						serverResponseLabel.removeStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(result);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
-				});
+						public void onSuccess(String result) {
+							System.out.println("Result = " + result.substring(0, 150) + "[...]");
+							dialogBox.setText("Remote Procedure Call");
+							serverResponseLabel.removeStyleName("serverResponseLabelError");
+							serverResponseLabel.setHTML(result);
+							dialogBox.center();
+							closeButton.setFocus(true);
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 

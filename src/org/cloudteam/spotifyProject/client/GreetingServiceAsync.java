@@ -7,4 +7,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface GreetingServiceAsync {
 	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
+	void greetGetRecurences(AsyncCallback<String> callback) throws Exception;
+	void greetGetDates(AsyncCallback<String> callback) throws Exception;
+	void greetGetCountries(AsyncCallback<String> callback) throws Exception;
+	void greetGetCharts(String type, String country, String recurrence, String date, int limit, AsyncCallback<String> callback) throws Exception;
 }
